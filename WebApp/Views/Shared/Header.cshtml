@@ -1,0 +1,101 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = null;
+}
+
+
+<header class="main-header navbar-light header-sticky header-sticky-smart header-mobile-lg">
+    <div class="sticky-area">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg px-0">
+                <a class="navbar-brand" href="/">
+                    <h3 class="text-primary">Property Point Builders</h3>
+                    @*<img src="~/images/main.jpeg" alt="HomeID"
+                         class="d-none d-lg-inline-block">
+                    <img src="~/images/logo-white.png" alt="HomeID"
+                         class="d-inline-block d-lg-none">*@
+                </a>
+                <div class="d-flex d-lg-none ml-auto">
+                    <a class="mr-4 position-relative text-white p-2" href="#">
+                        <i class="fal fa-heart fs-large-4"></i>
+                        <span class="badge badge-primary badge-circle badge-absolute">1</span>
+                    </a>
+                    <button class="navbar-toggler border-0 px-0" type="button" data-toggle="collapse"
+                            data-target="#primaryMenu01"
+                            aria-controls="primaryMenu01" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="text-white fs-24"><i class="fal fa-bars"></i></span>
+                    </button>
+                </div>
+                <div class="collapse navbar-collapse mt-3 mt-lg-0 mx-auto flex-grow-0" id="primaryMenu01">
+                    <ul class="navbar-nav hover-menu main-menu px-0 mx-lg-n4">
+
+                        <li id="navbar-item-home" aria-haspopup="false" aria-expanded="false"
+                            class="nav-item py-2 py-lg-5 px-0 px-lg-4">
+                            <a class="nav-link p-0"
+                               href="/Home">
+                                Home
+                            </a>
+                        </li>
+                        <li id="navbar-item-services" aria-haspopup="false" aria-expanded="false"
+                            class="nav-item py-2 py-lg-5 px-0 px-lg-4">
+                            <a class="nav-link p-0"
+                               href="/Services">
+                                Services
+                            </a>
+                        </li>
+                        <li id="navbar-item-blogs" aria-haspopup="false" aria-expanded="false"
+                            class="nav-item py-2 py-lg-5 px-0 px-lg-4">
+                            <a class="nav-link p-0"
+                               href="/Blogs">
+                                Blogs
+                            </a>
+                        </li>
+                        <li id="navbar-item-about" aria-haspopup="false" aria-expanded="false"
+                            class="nav-item py-2 py-lg-5 px-0 px-lg-4">
+                            <a class="nav-link p-0"
+                               href="/About">
+                                About Us
+                            </a>
+                        </li>
+                        <li id="navbar-item-contact" aria-haspopup="false" aria-expanded="false"
+                            class="nav-item py-2 py-lg-5 px-0 px-lg-4">
+                            <a class="nav-link p-0"
+                               href="/Contact">
+                                Contact Us
+                            </a>
+                        </li>
+                        
+                        
+                    </ul>
+                    <div class="d-block d-lg-none">
+                        <ul class="navbar-nav flex-row justify-content-lg-end d-flex flex-wrap py-2">
+
+                            <li class="nav-item ml-auto w-100 w-sm-auto">
+                                <a class="btn btn-primary btn-lg"
+                                   href="/Properties/Create">
+                                    Add listing
+                                    <img src="~/images/add-listing-icon.png" alt="Add listing"
+                                         class="ml-1">
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="d-none d-lg-block">
+                    <ul class="navbar-nav flex-row justify-content-lg-end d-flex flex-wrap text-body py-2">
+                        <li class="nav-item ml-auto w-100 w-sm-auto">
+                            <a class="btn btn-primary btn-lg"
+                               href="/Properties/Create">
+                                Add listing
+                                <img src="~/images/add-listing-icon.png" alt="Add listing"
+                                     class="ml-1">
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>

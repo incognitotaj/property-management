@@ -1,0 +1,107 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = null;
+}
+
+
+<header class="main-header navbar-light header-sticky header-sticky-smart header-mobile-lg">
+    <div class="sticky-area">
+        <div class="container">
+            @if (User.Identity.IsAuthenticated)
+            {
+                <nav class="navbar navbar-expand-lg px-0">
+                    <a class="navbar-brand" href="/">
+                        <h3 class="text-primary">Property Point</h3>
+                        @*<img src="~/images/logo.png" alt="HomeID"
+                                 class="d-none d-lg-inline-block">
+                            <img src="~/images/logo-white.png" alt="HomeID"
+                                 class="d-inline-block d-lg-none">*@
+                    </a>
+                    <div class="d-flex d-lg-none ml-auto">
+                        <a class="mr-4 position-relative text-white p-2" href="#">
+                            <i class="fal fa-heart fs-large-4"></i>
+                            <span class="badge badge-primary badge-circle badge-absolute">1</span>
+                        </a>
+                        <button class="navbar-toggler border-0 px-0" type="button" data-toggle="collapse"
+                                data-target="#primaryMenu01"
+                                aria-controls="primaryMenu01" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="text-white fs-24"><i class="fal fa-bars"></i></span>
+                        </button>
+                    </div>
+                    <div class="collapse navbar-collapse mt-3 mt-lg-0 mx-auto flex-grow-0" id="primaryMenu01">
+                        <ul class="navbar-nav hover-menu main-menu px-0 mx-lg-n4">
+
+                            <li id="navbar-item-home" aria-haspopup="false" aria-expanded="false"
+                                class="nav-item py-2 py-lg-5 px-0 px-lg-4">
+                                <a class="nav-link p-0"
+                                   href="/Home">
+                                    Home
+                                </a>
+                            </li>
+                            <li id="navbar-item-services" aria-haspopup="false" aria-expanded="false"
+                                class="nav-item py-2 py-lg-5 px-0 px-lg-4">
+                                <a class="nav-link p-0"
+                                   href="/Users">
+                                    Users
+                                </a>
+                            </li>
+                            <li id="navbar-item-services" aria-haspopup="false" aria-expanded="false"
+                                class="nav-item py-2 py-lg-5 px-0 px-lg-4">
+                                <a class="nav-link p-0"
+                                   href="/Services">
+                                    Services
+                                </a>
+                            </li>
+
+                            <li id="navbar-item-blogs" aria-haspopup="false" aria-expanded="false"
+                                class="nav-item py-2 py-lg-5 px-0 px-lg-4">
+                                <a class="nav-link p-0"
+                                   href="/Blogs">
+                                    Blogs
+                                </a>
+                            </li>
+                            <li id="navbar-item-services" aria-haspopup="false" aria-expanded="false"
+                                class="nav-item py-2 py-lg-5 px-0 px-lg-4">
+                                <a class="nav-link p-0"
+                                   href="/Properties">
+                                    Properties
+                                </a>
+                            </li>
+                            <li id="navbar-item-services" aria-haspopup="false" aria-expanded="false"
+                                class="nav-item py-2 py-lg-5 px-0 px-lg-4">
+                                <a class="nav-link p-0"
+                                   href="/Contacts">
+                                    Contacts
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="d-block d-lg-none">
+
+                        </div>
+                    </div>
+                    <div class="d-none d-lg-block">
+                        <div class="dropdown border-md-0 border-0 py-3 text-right">
+                            <a href="#" class="dropdown-toggle text-heading pr-3 pr-sm-6 d-flex align-items-center justify-content-end" data-toggle="dropdown">
+                                <div class="mr-4 w-48px">
+                                    <img src="~/images/male-avatar.jpg"
+                                         alt="@User.Identity.Name"
+                                         class="rounded-circle">
+                                </div>
+                                <div class="fs-13 font-weight-500 lh-1">
+                                </div>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right w-100">
+                                @*<a class="dropdown-item" href="#">My Profile</a>*@
+                                <a class="dropdown-item" href="/Auth/ChangePassword">Password</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="/Auth/Logout">Logout</a>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            }
+        </div>
+    </div>
+</header>

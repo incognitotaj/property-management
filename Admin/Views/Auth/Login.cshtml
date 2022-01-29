@@ -1,0 +1,62 @@
+﻿@model LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+    var returnUrl = Context.Request.Query["returnUrl"];
+}
+
+<section class="py-13" data-animated-id="1">
+    <div class="container">
+        <div class="row login-register">
+            <div class="col-lg-6 offset-3">
+                <div class="card border-0 shadow-xxs-2 mb-6">
+                    <div class="card-body px-8 py-6">
+                        <h2 class="card-title fs-30 font-weight-600 text-dark lh-16 mb-2">Log In</h2>
+                        @*<p class="mb-4">
+                            Don't have an account? <a href="#" class="text-heading hover-primary">
+                                <u>
+                                    Sign Up
+                                </u>
+                            </a>
+                        </p>*@
+                        <form class="form" method="post" asp-area="" asp-controller="Auth" asp-action="Login"
+                              asp-route-returnUrl="@returnUrl">
+                            <div class="form-group mb-4">
+                                <label for="username-1">Email</label>
+                                <input type="text" class="form-control form-control-lg border-0" asp-for="Username" placeholder="Your email">
+                            </div>
+                            <div class="form-group mb-4">
+                                <label for="password-2">Password</label>
+                                <div class="input-group input-group-lg">
+                                    <input type="password" class="form-control border-0 shadow-none fs-13" asp-for="Password" placeholder="Password">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text bg-gray-01 border-0 text-body fs-18">
+                                            <i class="far fa-eye-slash"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex mb-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" asp-for="RememberMe">
+                                    <label class="form-check-label" asp-for="RememberMe">
+                                        Stay signed in
+                                    </label>
+                                </div>
+                                <a asp-area="" asp-controller="Auth" asp-action="ForgotPassword" class="d-inline-block ml-auto fs-13 lh-2 text-body">
+                                    <u>Forgot your password?</u>
+                                </a>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-lg btn-block rounded">Log in</button>
+                        </form>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts{
+    <script>
+    </script>
+}

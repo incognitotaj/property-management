@@ -1,0 +1,110 @@
+﻿
+@{
+    ViewData["Title"] = "Home";
+}
+
+
+<section>
+    <div class="bg-gray-02 py-lg-13 pt-11 pb-6">
+        <div class="container container-xxl">
+            <div class="d-flex flex-wrap flex-md-nowrap mb-6">
+                <div class="mr-0 mr-md-auto">
+                    <h2 class="mb-0 text-heading fs-22 lh-15">Welcome back, @User.Identity.Name!</h2>
+                    <p>Displays overall summary of the system</p>
+                </div>
+                <div>
+                    <a href="/Properties/Create" class="btn btn-primary btn-lg">
+                        <span>Add New Property</span>
+                        <span class="d-inline-block ml-1 fs-20 lh-1">
+                            <span class="fa fa-home"></span>
+                        </span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6 col-xxl-3 mb-6">
+                    <div class="card">
+                        <div class="card-body row align-items-center px-6 py-7">
+                            <div class="col-5">
+                                <span class="w-83px h-83 d-flex align-items-center justify-content-center fs-36 badge badge-blue badge-circle">
+                                    <span class="fa fa-home"></span>
+                                </span>
+                            </div>
+                            <div class="col-7 text-center">
+                                <p class="fs-42 lh-12 mb-0" id="properties"></p>
+                                <p>Properties</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xxl-3 mb-6">
+                    <div class="card">
+                        <div class="card-body row align-items-center px-6 py-7">
+                            <div class="col-5">
+                                <span class="w-83px h-83 d-flex align-items-center justify-content-center fs-36 badge badge-green badge-circle">
+                                    <span class="fa fa-blog"></span>
+                                </span>
+                            </div>
+                            <div class="col-7 text-center">
+                                <p class="fs-42 lh-12 mb-0" id="blogs"></p>
+                                <p>Total Blogs</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xxl-3 mb-6">
+                    <div class="card">
+                        <div class="card-body row align-items-center px-6 py-7">
+                            <div class="col-4">
+                                <span class="w-83px h-83 d-flex align-items-center justify-content-center fs-36 badge badge-yellow badge-circle">
+                                    <span class="fa fa-users"></span>
+                                </span>
+                            </div>
+                            <div class="col-8 text-center">
+                                <p class="fs-42 lh-12 mb-0" id="users">0</p>
+                                <p>Total Users</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xxl-3 mb-6">
+                    <div class="card">
+                        <div class="card-body row align-items-center px-6 py-7">
+                            <div class="col-5">
+                                <span class="w-83px h-83 d-flex align-items-center justify-content-center fs-36 badge badge-pink badge-circle">
+                                    <span class="fa fa-cogs text-danger"></span>
+                                </span>
+                            </div>
+                            <div class="col-7 text-center">
+                                <p class="fs-42 lh-12 mb-0" id="services">0</p>
+                                <p>Total Services</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts{
+    <script>
+        $(function () {
+            $.ajax({
+                url: '/Home/Summary',
+                type: 'GET',
+                success: function (response) {
+                    console.log(response);
+
+                    $("#properties").text(response.properties);
+                    $("#blogs").text(response.blogs);
+                    $("#users").text(response.users);
+                    $("#services").text(response.services);
+                },
+                error: function () {
+                }
+            });
+        });
+    </script>
+}

@@ -1,0 +1,250 @@
+﻿@model PropertyCreateViewModel
+@{
+    ViewData["Title"] = "Register Property";
+}
+
+<section class="pb-6 page-title shadow">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb pt-6 pt-lg-2 pb-5 lh-15">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item"><a href="/Properties">Properties</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Register New</li>
+            </ol>
+        </nav>
+        <div class="d-flex justify-content-between">
+            <h1 class="fs-30 lh-16 mb-1 text-dark font-weight-600">Property Details</h1>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="bg-gray-02 py-lg-8 pt-11 pb-6">
+        <div class="container container-xxl">
+            <form asp-area="" asp-controller="Properties" asp-action="Create"
+                  method="post" enctype="multipart/form-data">
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(excludePropertyErrors: true, null, new { @class = "text-danger small" })
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card mb-6">
+                            <div class="card-body p-6">
+                                <h3 class="card-title mb-0 text-heading fs-22 lh-15">
+                                    Contact Information
+                                </h3>
+                                <div class="row">
+                                    <div class="form-group col-lg-4">
+                                        <label asp-for="Name" class="text-heading">Name</label>
+                                        <input type="text" class="form-control form-control-lg border-0"
+                                               asp-for="Name">
+                                        <span asp-validation-for="Name" class="text-danger small"></span>
+                                    </div>
+                                    <div class="form-group col-lg-4">
+                                        <label asp-for="Email" class="text-heading">Email</label>
+                                        <input type="text" class="form-control form-control-lg border-0"
+                                               asp-for="Email">
+                                        <span asp-validation-for="Email" class="text-danger small"></span>
+                                    </div>
+                                    <div class="form-group col-lg-4">
+                                        <label asp-for="Mobile" class="text-heading">Mobile</label>
+                                        <input type="text" class="form-control form-control-lg border-0"
+                                               asp-for="Mobile">
+                                        <span asp-validation-for="Mobile" class="text-danger small"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="card mb-6">
+                            <div class="card-body p-6">
+                                <h3 class="card-title mb-0 text-heading fs-22 lh-15">
+                                    Type, Purpose, Location, &amp; Address
+                                </h3>
+                                <div class="form-group">
+                                    <label asp-for="PropertyTypeId" class="text-heading">Type </label>
+                                    <select class="form-control form-control-lg border-0 font-weight-normal"
+                                            asp-for="PropertyTypeId" asp-items="Model.PropertyTypes">
+                                        <option value="">Select From List</option>
+                                    </select>
+                                    <span asp-validation-for="PropertyTypeId" class="text-danger small"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="PurposeId" class="text-heading">Purpose </label>
+                                    <select class="form-control form-control-lg border-0 font-weight-normal"
+                                            asp-for="PurposeId" asp-items="Model.Purposes">
+                                        <option value="">Select From List</option>
+                                    </select>
+                                    <span asp-validation-for="PurposeId" class="text-danger small"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="CityId" class="text-heading">City </label>
+                                    <select class="form-control form-control-lg border-0 font-weight-normal"
+                                            asp-for="CityId" asp-items="Model.Cities">
+                                        <option value="">Select From List</option>
+                                    </select>
+                                    <span asp-validation-for="CityId" class="text-danger small"></span>
+                                </div>
+                                <div class="form-group mb-0">
+                                    <label asp-for="Address" class="text-heading">Address</label>
+                                    <textarea class="form-control border-0" rows="3"
+                                              asp-for="Address"></textarea>
+                                    <span asp-validation-for="Address" class="text-danger small"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card mb-6">
+                            <div class="card-body p-6">
+                                <h3 class="card-title mb-0 text-heading fs-22 lh-15">
+                                    Image
+                                </h3>
+
+                                <div class="form-group mb-4">
+                                    <label class="sr-only-">Photo</label>
+                                    <div class="input-group input-group-lg">
+                                        <input type="file" class="custom-file-input border-0 shadow-none fs-13"
+                                               id="Photo" name="Photo">
+                                        <label class="custom-file-label" for="Photo">Choose file</label>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-4">
+                                    <label class="sr-only-">Preview</label>
+
+                                    <img id="preview" src="~/images/slider-img5.jpg" alt="your image"
+                                         class="img img-thumbnail img-responsive center-block d-block mx-auto" />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="card mb-6">
+                            <div class="card-body p-6">
+                                <h3 class="card-title mb-0 text-heading fs-22 lh-15">
+                                    Description
+                                </h3>
+                                <div class="form-group">
+                                    <label asp-for="Title" class="text-heading">Title <span class="text-muted">(mandatory)</span></label>
+                                    <input type="text" class="form-control form-control-lg border-0" asp-for="Title">
+                                    <span asp-validation-for="Title" class="text-danger small"></span>
+                                </div>
+                                <div class="form-group mb-0">
+                                    <label asp-for="Description" class="text-heading">Description</label>
+                                    <textarea class="form-control border-0" rows="5" asp-for="Description"></textarea>
+                                    <span asp-validation-for="Description" class="text-danger small"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="card mb-6">
+                            <div class="card-body p-6">
+                                <h3 class="card-title mb-0 text-heading fs-22 lh-15">
+                                    Area &amp; Price
+                                </h3>
+                                <div class="form-group">
+                                    <label asp-for="Price" class="text-heading">Price</label>
+                                    <input type="text" class="form-control form-control-lg border-0" asp-for="Price">
+                                    <span asp-validation-for="Price" class="text-danger small"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="LandArea" class="text-heading">Area </label>
+                                    <input type="text" class="form-control form-control-lg border-0" asp-for="LandArea">
+                                    <span asp-validation-for="LandArea" class="text-danger small"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="AreaUnitId" class="text-heading">Unit </label>
+                                    <select class="form-control form-control-lg border-0 font-weight-normal"
+                                            asp-for="AreaUnitId" asp-items="Model.AreaUnits">
+                                        <option>Select From List</option>
+                                    </select>
+                                    <span asp-validation-for="AreaUnitId" class="text-danger small"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card mb-6">
+                            <div class="card-body p-6">
+                                <h3 class="card-title mb-0 text-heading fs-22 lh-15">
+                                    Beds, Baths, Kitchens, &amp; Floors
+                                </h3>
+                                <div class="row">
+                                    <div class="form-group col-lg-6">
+                                        <label asp-for="BedRooms" class="text-heading">Bed Rooms</label>
+                                        <input type="number" class="form-control form-control-lg border-0" asp-for="BedRooms">
+                                        <span asp-validation-for="BedRooms" class="text-danger small"></span>
+                                    </div>
+                                    <div class="form-group col-lg-6">
+                                        <label asp-for="BathRooms" class="text-heading">Bath Rooms </label>
+                                        <input type="number" class="form-control form-control-lg border-0" asp-for="BathRooms">
+                                        <span asp-validation-for="BathRooms" class="text-danger small"></span>
+                                    </div>
+                                    <div class="form-group col-lg-6">
+                                        <label asp-for="Kitchens" class="text-heading">Kitchens </label>
+                                        <input type="number" class="form-control form-control-lg border-0" asp-for="Kitchens">
+                                        <span asp-validation-for="Kitchens" class="text-danger small"></span>
+                                    </div>
+                                    <div class="form-group col-lg-6">
+                                        <label asp-for="Floors" class="text-heading">Floors</label>
+                                        <input type="number" class="form-control form-control-lg border-0" asp-for="Floors">
+                                        <span asp-validation-for="Floors" class="text-danger small"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-lg-12 form-group">
+                        <a href="/Properties" class="btn btn-accent btn-lg float-right ml-2"
+                           data-dismiss="modal">
+                            Cancel
+                        </a>
+
+                        <button type="submit" class="btn btn-primary btn-lg float-right">Save Changes</button>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+
+@section Scripts{
+    <script>
+        $(function () {
+
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('#preview').attr('src', e.target.result);
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                    $(".custom-file-label").text(input.files[0].name);
+                }
+            }
+
+            $("#Photo").change(function () {
+                readURL(this);
+            });
+        });
+    </script>
+}

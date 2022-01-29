@@ -1,0 +1,177 @@
+﻿
+@{
+    ViewData["Title"] = "Properties";
+}
+
+<section class="pb-6 page-title shadow">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb pt-6 pt-lg-2 pb-5 lh-15">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Properties</li>
+            </ol>
+        </nav>
+        <div class="d-flex justify-content-between">
+            <h1 class="fs-30 lh-16 mb-1 text-dark font-weight-600">Properties</h1>
+            <a class="btn btn-primary btn-lg"
+               href="/Properties/Create" id="BtnNew">
+                Add New
+            </a>
+        </div>
+    </div>
+</section>
+<section>
+
+    <div class="py-lg-6 pt-4 pb-4">
+        <div class="container container-xxl">
+            <div class="row mb-2">
+                <div class="col-lg-12 d-flex justify-content-between">
+                    <input type="text" class="form-control form-control-lg border-0"
+                           id="SearchText" name="SearchText"
+                           placeholder="Enter the title of blog to search" />
+                </div>
+            </div>
+            <div class="border-1x"></div>
+            <div class="row mb-2">
+                <div class="col-lg-12 d-flex justify-content-between">
+                    <a class="btn btn-primary btn-lg"
+                       href="#" id="BtnSearch">
+                        Search
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bg-gray-02 py-lg-13 pt-11 pb-6">
+        <div class="container container-xxl">
+
+            <div class="row mb-2">
+                <div class="col-lg-12 d-flex justify-content-between">
+                    <span class="float-left mr-2 pt-2">
+                        <label for="radioAll" class="radio-trigger mb-0 mr-2">
+                            <input type="radio" class="js-radio" id="radioAll" checked="checked" name="IsActive" value="3">
+                            <span class="checkmark"></span>
+                            <span class="font-size-15 font-weight-bolder primary-color-3">All</span>
+                        </label>
+                        <label for="radioActive" class="radio-trigger mb-0 mr-2">
+                            <input type="radio" class="js-radio" id="radioActive" name="IsActive" value="1">
+                            <span class="checkmark"></span>
+                            <span class="font-size-15 font-weight-bolder primary-color-3">Active</span>
+                        </label>
+                        <label for="radioInActive" class="radio-trigger mb-0 mr-2">
+                            <input type="radio" class="js-radio" id="radioInActive" name="IsActive" value="2">
+                            <span class="checkmark"></span>
+                            <span class="font-size-15 font-weight-bolder primary-color-3">In Active</span>
+                        </label>
+                    </span>
+
+                    <select class="custom-select pull-right" style="width: 125px;" id="PageSize">
+                        <option value="" selected="">Page Size</option>
+                        <option value="5">5 Records</option>
+                        <option value="10">10 Records</option>
+                        <option value="25">25 Records</option>
+                        <option value="50">50 Records</option>
+                    </select>
+                </div>
+            </div>
+            <div id="Properties">
+                <div class="alert alert-primary" role="alert">
+                    Apply filters and click search to load data!
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<div id="modal-placeholder"></div>
+
+
+@section Scripts{
+    <script src="~/lib/jquery-validate/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script src="~/lib/bootbox.js/bootbox.js"></script>
+    <script src="~/lib/toastr.js/toastr.min.js"></script>
+    <script>
+        $(function () {
+            let placeholderElement = $('#modal-placeholder');
+
+            function loadData(pageNumber, pageSize) {
+                if (pageSize == 0) {
+                    pageSize = 5;
+                }
+                $.ajax({
+                    url: '/Properties/LoadData',
+                    type: 'GET',
+                    data: {
+                        isActive: $("input[type=radio]:checked").val(),
+                        pageNumber: pageNumber,
+                        pageSize: pageSize,
+                        textSearch: $("#SearchText").val()
+                    },
+                    success: function (response) {
+                        $("#Properties").html(response);
+                    },
+                    error: function () {
+                    }
+                });
+            }
+
+            $(document).on("click", "#Properties .page-link", function (event) {
+                event.preventDefault();
+                let element = $(this);
+                let pageSize = $("#PageSize option:selected").val();
+
+
+                let pageNumber = element.attr("data-pageNumber");
+                loadData(pageNumber, pageSize);
+
+            });
+
+            $(".js-radio").on("change", function (e) {
+                e.preventDefault();
+                let pageSize = $("#PageSize option:selected").val();
+                let pageNumber = 1;
+                loadData(pageNumber, pageSize);
+            });
+
+            $("#PageSize").on("change", function (event) {
+                let pageSize = $("#PageSize option:selected").val();
+                let pageNumber = 1;
+                loadData(pageNumber, pageSize);
+
+            });
+
+            $("#BtnSearch").on("click", function (event) {
+                event.preventDefault();
+                loadData(1, $("#PageSize option:selected").val());
+            });
+
+            $(document).delegate("#Properties .js-delete", "click", function (event) {
+                event.preventDefault();
+                let element = $(this);
+
+                bootbox.confirm("Are you sure to toggle record's state", function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: "/Properties/Toggle",
+                            type: "POST",
+                            data: { id: element.attr("data-id") },
+                            success: function (response) {
+                                if (response.status == true) {
+                                    toastr.success(response.message);
+
+                                    loadData();
+                                }
+                                else {
+                                    toastr.error(response.message);
+                                }
+                            },
+                            error: function () { }
+                        })
+                    }
+                });
+            });
+        });
+    </script>
+}

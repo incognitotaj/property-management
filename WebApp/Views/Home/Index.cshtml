@@ -1,0 +1,199 @@
+﻿
+@{
+    ViewData["Title"] = "Home";
+}
+
+@section Styles{
+
+    <link href="~/lib/toastr.js/toastr.css" rel="stylesheet" />
+}
+
+<section class="d-flex flex-column">
+    <div style="background-image: url('images/bg-home-01.jpg')"
+         class="bg-cover d-flex align-items-center custom-vh-100">
+        <div class="container pt-lg-15 py-8" data-animate="zoomIn">
+            <p class="text-white fs-md-22 fs-18 font-weight-500 letter-spacing-367 mb-6 text-center text-uppercase">
+                Let us guide your home
+            </p>
+            <h2 class="text-white display-2 text-center mb-sm-13 mb-8">Find Your Dream Home</h2>
+
+
+        </div>
+    </div>
+</section>
+
+<section class="pt-lg-12 pb-lg-10 py-11">
+    <div class="container container-xxl">
+        <div class="row">
+            <div class="col-md-6">
+                <h2 class="text-heading">Best Properties For Sale</h2>
+                <span class="heading-divider"></span>
+                @*<p class="mb-6">Lorem ipsum dolor sit amet, consec tetur cing elit. Suspe ndisse suscipit</p>*@
+            </div>
+            <div class="col-md-6 text-md-right">
+                <a href="/Properties"
+                   class="btn fs-14 text-secondary btn-accent py-3 lh-15 px-7 mb-6 mb-lg-0">
+                    See all properties
+                    <i class="far fa-long-arrow-right ml-1"></i>
+                </a>
+            </div>
+        </div>
+
+        @await Component.InvokeAsync("WebApp.ViewComponents.Properties", new { purposeId = (int)PropertyPurpose.Sale })
+
+    </div>
+</section>
+
+@*Explore*@
+<section>
+    <div class="bg-gray-02 py-lg-13 pt-11 pb-6">
+        <div class="container container-xxl">
+            <div class="row">
+                <div class="col-lg-4 pr-xl-13" data-animate="fadeInLeft">
+                    <h2 class="text-heading lh-1625">
+                        Explore <br>
+                        by Property Type
+                    </h2>
+                    <span class="heading-divider"></span>
+                    @*<p class="mb-6">Lorem ipsum dolor sit amet, consec tetur cing elit. Suspe ndisse suscipit</p>*@
+                    <a href="/Properties"
+                       class="btn btn-lg text-secondary btn-accent">
+                        Available Properties
+                        <i class="far fa-long-arrow-right ml-1"></i>
+                    </a>
+                </div>
+                <div class="col-lg-8" data-animate="fadeInRight">
+                    <div class="slick-slider arrow-haft-inner custom-arrow-xxl-hide mx-0"
+                         data-slick-options='{"slidesToShow": 4, "autoplay":true,"dots":false,"responsive":[{"breakpoint": 1200,"settings": {"slidesToShow":3,"arrows":false}},{"breakpoint": 992,"settings": {"slidesToShow":3,"arrows":false}},{"breakpoint": 768,"settings": {"slidesToShow": 3,"arrows":false,"autoplay":true}},{"breakpoint": 576,"settings": {"slidesToShow": 2,"arrows":false,"autoplay":true}}]}'>
+                        <div class="box px-0 py-6">
+                            <a href="/Properties"
+                               class="card border-0 align-items-center justify-content-center pt-7 pb-5 px-3 shadow-hover-3 bg-transparent bg-hover-white text-decoration-none">
+                                <img src="~/images/verified.png" class="card-img-top"
+                                     alt="Apartment">
+                                <div class="card-body px-0 pt-5 pb-0">
+                                    <h4 class="card-title fs-16 lh-2 text-dark mb-0">Apartment</h4>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="box px-0 py-6">
+                            <a href="/Properties"
+                               class="card border-0 align-items-center justify-content-center pt-7 pb-5 px-3 shadow-hover-3 bg-transparent bg-hover-white text-decoration-none">
+                                <img src="~/images/sofa.png" class="card-img-top"
+                                     alt="House">
+                                <div class="card-body px-0 pt-5 pb-0">
+                                    <h4 class="card-title fs-16 lh-2 text-dark mb-0">House</h4>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="box px-0 py-6">
+                            <a href="/Properties"
+                               class="card border-0 align-items-center justify-content-center pt-7 pb-5 px-3 shadow-hover-3 bg-transparent bg-hover-white text-decoration-none">
+                                <img src="~/images/architecture-and-city.png" class="card-img-top"
+                                     alt="Office">
+                                <div class="card-body px-0 pt-5 pb-0">
+                                    <h4 class="card-title fs-16 lh-2 text-dark mb-0">Office</h4>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="box px-0 py-6">
+                            <a href="/Properties"
+                               class="card border-0 align-items-center justify-content-center pt-7 pb-5 px-3 shadow-hover-3 bg-transparent bg-hover-white text-decoration-none">
+                                <img src="~/images/eco-house.png" class="card-img-top"
+                                     alt="Villa">
+                                <div class="card-body px-0 pt-5 pb-0">
+                                    <h4 class="card-title fs-16 lh-2 text-dark mb-0">Villa</h4>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="box px-0 py-6">
+                            <a href="/Properties"
+                               class="card border-0 align-items-center justify-content-center pt-7 pb-5 px-3 shadow-hover-3 bg-transparent bg-hover-white text-decoration-none">
+                                <img src="~/images/verified.png" class="card-img-top"
+                                     alt="Apartment">
+                                <div class="card-body px-0 pt-5 pb-0">
+                                    <h4 class="card-title fs-16 lh-2 text-dark mb-0">Apartment</h4>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="pt-lg-12 pb-lg-11 py-11">
+    <div class="container container-xxl">
+        <div class="row">
+            <div class="col-md-6">
+                <h2 class="text-heading">Best Properties For Rent</h2>
+                <span class="heading-divider"></span>
+                @*<p class="mb-6">Lorem ipsum dolor sit amet, consec tetur cing elit. Suspe ndisse suscipit</p>*@
+            </div>
+            <div class="col-md-6 text-md-right">
+                <a href="/Properties"
+                   class="btn fs-14 text-secondary btn-accent py-3 lh-15 px-7 mb-6 mb-lg-0">
+                    See all properties
+                    <i class="far fa-long-arrow-right ml-1"></i>
+                </a>
+            </div>
+        </div>
+
+        @await Component.InvokeAsync("WebApp.ViewComponents.Properties", new { purposeId = (int)PropertyPurpose.Rent })
+
+    </div>
+</section>
+
+<div id="modal-placeholder"></div>
+
+@section Scripts{
+    <script src="~/lib/jquery-validate/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script src="~/lib/bootbox.js/bootbox.js"></script>
+    <script src="~/lib/toastr.js/toastr.min.js"></script>
+    <script>
+        $(function () {
+            let placeholderElement = $('#modal-placeholder');
+
+            $(".btn-offer").on("click", function (e) {
+                e.preventDefault();
+
+                let element = $(this);
+
+                $.ajax({
+                    url: "/PropertyRequests/Create",
+                    type: "GET",
+                    data: { propertyId: element.attr("data-id") },
+                    success: function (response) {
+                        placeholderElement.html(response);
+                        placeholderElement.find('.modal').modal('show');
+                    },
+                    error: function () {
+                    }
+                });
+            });
+
+            placeholderElement.on('click', '[data-save="modal"]', function (event) {
+                event.preventDefault();
+
+                var form = $(this).parents('.modal').find('form');
+                var actionUrl = form.attr('action');
+                var dataToSend = form.serialize();
+
+                $.post(actionUrl, dataToSend).done(function (data) {
+                    var newBody = $('.modal-body', data);
+                    placeholderElement.find('.modal-body').replaceWith(newBody);
+
+                    // find IsValid input field and check it's value
+                    // if it's valid then hide modal window
+                    var isValid = newBody.find('[name="IsValid"]').val() == 'True';
+                    if (isValid) {
+                        placeholderElement.find('.modal').modal('hide');
+                        toastr.success("Your offer has been received successfully!");
+
+                    }
+                });
+            });
+        });
+    </script>
+}

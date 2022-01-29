@@ -1,0 +1,213 @@
+﻿@model CommentCreateViewModel
+@{
+    ViewData["Title"] = "Details";
+}
+
+@section Styles{
+
+}
+
+<section class="pb-6 page-title shadow" data-animated-id="1">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb pt-6 pt-lg-2 pb-5 lh-15">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item"><a href="/Blogs">Blogs</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Details</li>
+            </ol>
+        </nav>
+        <h1 class="fs-30 lh-16 mb-1 text-dark font-weight-600">Blog Details</h1>
+    </div>
+</section>
+
+<section class="pb-12" data-animated-id="2">
+    <div class="container">
+        <ul class="list-inline text-center mb-3">
+            <li class="list-inline-item">
+                <a href="#" class="badge bg-gray-01 letter-spacing-1 text-body bg-hover-accent px-2">
+                    @Model.Blog.Category.Name
+                </a>
+            </li>
+        </ul>
+
+        <h2 class="fs-md-32 text-heading lh-141 mb-6 mxw-670 text-center">
+            @Model.Blog.Title
+        </h2>
+
+        <ul class="list-inline text-center mb-8">
+            <li class="list-inline-item mr-4">
+                By Admin
+            </li>
+            <li class="list-inline-item mr-4">
+                <i class="far fa-calendar mr-1"></i>
+                @Model.Blog.Created.ToString("MMM d, yyyy")
+            </li>
+            <li class="list-inline-item mr-4">
+                <i class="far fa-eye mr-1"></i>
+                @Model.Blog.Comments.Count()
+            </li>
+        </ul>
+
+        @{
+            var imgSrc = "";
+            if (Model.Blog.Photo != null)
+            {
+                var base64 = Convert.ToBase64String(Model.Blog.Photo);
+                imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+            }
+        }
+
+        <img class="mb-9 mx-auto d-block" src="@imgSrc" alt="@Model.Blog.Title" />
+
+        <div class="mxw-751">
+            <div class="lh-214 mb-9 ">
+                <p>
+                    @Model.Blog.Description
+                </p>
+            </div>
+
+            <div class="row pb-7 mb-6 border-bottom">
+                <div class="col-sm-6 d-flex">
+                    <span class="d-inline-block mr-2"><i class="fal fa-tags"></i></span>
+                    <ul class="list-inline">
+                        <li class="list-inline-item mr-0">
+                            <a href="#" class="text-muted hover-dark">real estate,</a>
+                        </li>
+                        <li class="list-inline-item mr-0">
+                            <a href="#" class="text-muted hover-dark">thememove,</a>
+                        </li>
+                        <li class="list-inline-item mr-0">
+                            <a href="#" class="text-muted hover-dark">building</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3 class="fs-22 text-heading lh-15 mb-6">Comments (@Model.Blog.Comments.Count(p => p.IsActive == true))</h3>
+
+            @if (Model.Blog.Comments.Any(p => p.IsActive == true))
+            {
+
+                @foreach (var item in Model.Blog.Comments)
+                {
+                    if (item.IsActive)
+                    {
+                        <div class="media mb-6 pb-5 border-bottom">
+                            <div class="w-70px mr-2">
+                                <img src="~/images/male-avatar.jpg" alt="@item.Name">
+                            </div>
+                            <div class="media-body">
+                                <p class="text-heading fs-16 font-weight-500 mb-0">@item.Name</p>
+                                <p class="mb-4">
+                                    @item.Message
+                                </p>
+                                <ul class="list-inline">
+                                    <li class="list-inline-item text-muted">
+                                        @item.Created.ToLongDateString()
+                                        <span class="d-inline-block ml-2"></span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    }
+                }
+            }
+            else
+            {
+                <div class="alert alert-primary" role="alert">
+                    No data found!
+                </div>
+            }
+
+            <h3 class="fs-22 text-heading lh-15 mb-6">Leave your thought here</h3>
+            <form method="post" id="FrmComment"
+                  asp-area="" asp-controller="Blogs" asp-action="Details">
+                @Html.AntiForgeryToken()
+                <input type="hidden" asp-for="BlogId" />
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group mb-4">
+                            <input type="text" placeholder="Your Name"
+                                   asp-for="Name" class="form-control form-control-lg border-0">
+                            <span asp-validation-for="Name" class="text-danger small"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group mb-4">
+                            <input placeholder="Your Email" class="form-control form-control-lg border-0"
+                                   type="email" asp-for="Email">
+                            <span asp-validation-for="Email" class="text-danger small"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group mb-6">
+                    <textarea class="form-control border-0" placeholder="Message"
+                              asp-for="Message" rows="5"></textarea>
+                    <span asp-validation-for="Message" class="text-danger small"></span>
+                </div>
+                <button type="submit" class="btn btn-lg btn-primary px-9">Submit</button>
+            </form>
+        </div>
+
+
+    </div>
+</section>
+
+<div id="modal-placeholder"></div>
+
+@section Scripts{
+    <script src="~/lib/bootbox.js/bootbox.js"></script>
+    <script src="~/lib/jquery-validate/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script>
+        $.validator.unobtrusive.parse('#FrmService');
+    </script>
+    <script>
+        $(function () {
+            let placeholderElement = $('#modal-placeholder');
+
+            $("#FrmComment").on("submit", function (e) {
+                e.preventDefault();
+                let frm = $(this);
+
+                if ($('#FrmComment').valid()) {
+                    bootbox.confirm("Are you sure to proceed?", function (result) {
+                        if (result) {
+                            let frm = $("#FrmComment");
+                            let url = frm.attr("action");
+                            let type = frm.attr("method");
+
+                            $.ajax({
+                                url: url,
+                                type: type,
+                                data: frm.serialize(),
+                                success: function (response) {
+                                    if (response.status == true) {
+                                        var path = "/Blogs/Message";
+                                        $.get(path).done(function (response) {
+                                            placeholderElement.html(response);
+                                            placeholderElement.find('.modal').modal('show');
+                                        });
+                                    } else {
+                                        toastr.error(response.message);
+                                    }
+                                },
+                                error: function () {
+
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+
+            placeholderElement.on('click', '[data-save="modal-message"]', function (event) {
+                event.preventDefault();
+                //var form = $(this).parents('.modal').find('form');
+
+                placeholderElement.find('.modal').modal('hide');
+                window.location = "/Blogs/Details?blogId=@Model.BlogId";
+            });
+        });
+    </script>
+}

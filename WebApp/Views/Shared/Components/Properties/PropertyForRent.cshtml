@@ -1,0 +1,152 @@
+﻿@model IEnumerable<Property>
+@{
+    Layout = null;
+}
+
+@if (Model.Any())
+{
+    <div class="slick-slider slick-dots-mt-0 custom-arrow-spacing-30"
+         data-slick-options='{"slidesToShow": 4,"dots":true,"arrows":false,"responsive":[{"breakpoint": 1600,"settings": {"slidesToShow":3}},{"breakpoint": 992,"settings": {"slidesToShow":2,"arrows":false}},{"breakpoint": 768,"settings": {"slidesToShow": 2,"arrows":false,"dots":true,"autoplay":true}},{"breakpoint": 576,"settings": {"slidesToShow": 1,"arrows":false,"dots":true,"autoplay":true}}]}'>
+        @foreach (var item in Model)
+        {
+            <div class="box pb-7 pt-2">
+                <div class="card shadow-hover-2" data-animate="zoomIn">
+                    <div class="hover-change-image bg-hover-overlay rounded-lg card-img-top">
+
+                        @{
+                            var imgSrc = "";
+                            if (item.Photo != null)
+                            {
+                                var base64 = Convert.ToBase64String(item.Photo);
+                                imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                            }
+                        }
+                        <img src="@imgSrc"
+                             alt="@item.Title">
+                        <div class="card-img-overlay p-2 d-flex flex-column">
+                            <div>
+                                @if (item.IsFeatured)
+                                {
+                                    <span class="badge mr-2 badge-orange">featured</span>
+                                }
+
+                                @if (item.IsSold)
+                                {
+                                    <span class="badge mr-2 badge-warning">Sold Out</span>
+                                }
+                                else
+                                {
+                                    <span class="badge mr-2 badge-primary">for Rent</span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body pt-3">
+                        <h2 class="card-title fs-16 lh-2 mb-0">
+                            <a href="#"
+                               class="text-dark hover-primary">
+                                @item.Title
+                            </a>
+                        </h2>
+                        <p class="card-text font-weight-500 text-gray-light mb-2">
+                            @item.Address
+                        </p>
+                        <ul class="list-inline d-flex mb-0 justify-content-between flex-wrap mr-n5">
+                            <li class="list-inline-item text-gray font-weight-500 fs-13 d-flex align-items-center mr-5"
+                                data-toggle="tooltip" title="3 Bedroom">
+                                <svg class="icon icon-bedroom fs-18 text-primary mr-1">
+                                    <use xlink:href="#icon-bedroom"></use>
+                                </svg>
+                                @item.BedRooms Br
+                            </li>
+                            <li class="list-inline-item text-gray font-weight-500 fs-13 d-flex align-items-center mr-5"
+                                data-toggle="tooltip" title="3 Bathrooms">
+                                <svg class="icon icon-shower fs-18 text-primary mr-1">
+                                    <use xlink:href="#icon-shower"></use>
+                                </svg>
+                                @item.BathRooms Ba
+                            </li>
+                            <li class="list-inline-item text-gray font-weight-500 fs-13 d-flex align-items-center mr-5"
+                                data-toggle="tooltip" title="Size">
+                                <svg class="icon icon-square fs-18 text-primary mr-1">
+                                    <use xlink:href="#icon-square"></use>
+                                </svg>
+                                @item.LandArea @item.AreaUnit.Name
+                            </li>
+                            <li class="list-inline-item text-gray font-weight-500 fs-13 d-flex align-items-center mr-5"
+                                data-toggle="tooltip" title="Kitchens">
+                                <svg class="icon icon-shower fs-18 text-primary mr-1">
+                                    <use xlink:href="#icon-shower"></use>
+                                </svg>
+                                @item.Kitchens Kh
+                            </li>
+                        </ul>
+                        <ul class="list-inline d-flex mb-0 justify-content-between flex-wrap mr-n5">
+                            <li class="list-inline-item text-gray font-weight-500 fs-13 d-flex align-items-start mr-5"
+                                data-toggle="tooltip" title="Size">
+                                <svg class="icon icon-square fs-18 text-primary mr-1">
+                                    <use xlink:href="#icon-square"></use>
+                                </svg>
+                                @item.Created.ToString("MMM d, yyyy")
+                            </li>
+
+                            <li class="list-inline-item text-gray font-weight-500 fs-13 d-flex align-items-end mr-5"
+                                data-toggle="tooltip" title="Size">
+                                <svg class="icon icon-square fs-18 text-primary mr-1">
+                                    <use xlink:href="#icon-square"></use>
+                                </svg>
+                                @item.Floors Story
+                            </li>
+                        </ul>
+                        <h2 class="card-title fs-16 lh-2 mb-0">
+                            <a href="#"
+                               class="text-dark hover-primary">
+                                Contact Details
+                            </a>
+                        </h2>
+                        <ul class="list-inline d-flex mb-0 justify-content-between flex-wrap mr-n5">
+                            <li class="list-inline-item text-gray font-weight-500 fs-13 d-flex align-items-start mr-5"
+                                data-toggle="tooltip" title="Mobile">
+                                <svg class="icon icon-square fs-18 text-primary mr-1">
+                                    <use xlink:href="#icon-square"></use>
+                                </svg>
+                                Mobile: (+92) 300 5155517
+                            </li>
+                            <li class="list-inline-item text-gray font-weight-500 fs-13 d-flex align-items-start mr-5"
+                                data-toggle="tooltip" title="Email">
+                                <svg class="icon icon-square fs-18 text-primary mr-1">
+                                    <use xlink:href="#icon-square"></use>
+                                </svg>
+                                Email: saqlain@propertypointbuilders.com
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-footer bg-transparent d-flex justify-content-between align-items-center py-3">
+                        <p class="fs-17 font-weight-bold text-heading mb-0">
+                            PKR @item.Price.ToString("N")
+                        </p>
+                        <ul class="list-inline mb-0">
+                            @if (!item.IsSold)
+                            {
+                                <li class="list-inline-item">
+                                    <a href="#"
+                                       data-id="@item.PropertyId"
+                                       class="border rounded pt-1 pb-1 pl-2 pr-2 btn-accent d-inline-flex align-items-center justify-content-center text-secondary hover-secondary btn-offer"
+                                       data-toggle="tooltip" title="Make Offer">
+                                        Make Offer
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="alert alert-primary" role="alert">
+        No data found!
+    </div>
+}

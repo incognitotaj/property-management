@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Real Estate Html Template" />
+    <meta name="author" content="" />
+    <meta name="generator" content="Jekyll v4.1.1" />
+
+    <title>@ViewData["Title"] - Admin</title>
+
+    <!-- Google fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap"
+          rel="stylesheet" />
+
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="~/vendors/fontawesome-pro-5/css/all.css">
+    <link rel="stylesheet" href="~/vendors/bootstrap-select/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="~/vendors/slick/slick.min.css">
+    <link rel="stylesheet" href="~/vendors/magnific-popup/magnific-popup.min.css">
+    <link rel="stylesheet" href="~/vendors/jquery-ui/jquery-ui.min.css">
+    <link rel="stylesheet" href="~/vendors/chartjs/Chart.min.css">
+    <link rel="stylesheet" href="~/vendors/dropzone/css/dropzone.min.css">
+    <link rel="stylesheet" href="~/vendors/animate.css">
+    <link rel="stylesheet" href="~/vendors/timepicker/bootstrap-timepicker.min.css">
+    <link rel="stylesheet" href="~/vendors/mapbox-gl/mapbox-gl.min.css">
+
+    <!-- Themes core CSS -->
+    <link rel="stylesheet" href="~/css/themes.css">
+    <link href="~/css/mines.css" rel="stylesheet" />
+    <!-- Favicons -->
+    <link rel="icon" href="~/images/favicon.ico">
+
+    @RenderSection("Styles", required: false)
+</head>
+<body>
+    @await Html.PartialAsync("Header")
+
+    <main id="content">
+        @RenderBody()
+    </main>
+
+    @await Html.PartialAsync("Footer")
+
+    <!-- Vendors scripts -->
+    <script src="~/vendors/jquery.min.js"></script>
+    <script src="~/vendors/jquery-ui/jquery-ui.min.js"></script>
+    <script src="~/vendors/bootstrap/bootstrap.bundle.js"></script>
+    <script src="~/vendors/bootstrap-select/js/bootstrap-select.min.js"></script>
+    <script src="~/vendors/slick/slick.min.js"></script>
+    <script src="~/vendors/waypoints/jquery.waypoints.min.js"></script>
+    <script src="~/vendors/counter/countUp.js"></script>
+    <script src="~/vendors/magnific-popup/jquery.magnific-popup.min.js"></script>
+    <script src="~/vendors/chartjs/Chart.min.js"></script>
+    <script src="~/vendors/dropzone/js/dropzone.min.js"></script>
+    <script src="~/vendors/timepicker/bootstrap-timepicker.min.js"></script>
+    <script src="~/vendors/hc-sticky/hc-sticky.min.js"></script>
+    <script src="~/vendors/jparallax/TweenMax.min.js"></script>
+    <script src="~/vendors/mapbox-gl/mapbox-gl.js"></script>
+
+    <!-- Theme scripts -->
+    <script src="~/js/theme.js"></script>
+
+    <div class="position-fixed pos-fixed-bottom-right p-6 z-index-10">
+        <a href="#"
+           class="gtf-back-to-top bg-white text-primary hover-white bg-hover-primary shadow p-0 w-52px h-52 rounded-circle fs-20 d-flex align-items-center justify-content-center"
+           title="Back To Top">
+            <i class="fal fa-arrow-up"></i>
+        </a>
+    </div>
+    <div class="loading-bar"></div>
+    <script>
+        $(function () {
+
+            $(document).bind('ajaxStart', function () {
+                $("body").addClass('loading');
+            }).bind('ajaxStop', function () {
+                $("body").removeClass('loading');
+            });
+        });
+    </script>
+
+    @RenderSection("Scripts", required: false)
+
+</body>
+</html>

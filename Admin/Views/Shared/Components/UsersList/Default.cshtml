@@ -1,0 +1,95 @@
+﻿@model PaginatedList<AppUser>
+@{
+    Layout = null;
+}
+
+@if (Model.Any())
+{
+    <table class="table table-hover bg-white border rounded-lg">
+        <thead class="thead-sm thead-black">
+            <tr>
+                <th scope="col" class="border-top-0 pt-6 pb-3">First Name</th>
+                <th scope="col" class="border-top-0 pt-6 pb-3">Last Name</th>
+                <th scope="col" class="border-top-0 pt-6 pb-3">Email</th>
+                <th scope="col" class="border-top-0 pt-6 pb-3">Date Created</th>
+                <th scope="col" class="border-top-0 pt-6 pb-3">Mobile #</th>
+                <th scope="col" class="border-top-0 pt-6 pb-3">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr class="shadow-hover-xs-2 bg-hover-white">
+                    <td class="align-middle">@item.FirstName</td>
+                    <td class="align-middle">@item.LastName</td>
+                    <td class="align-middle">@item.Email</td>
+                    <td class="align-middle">@item.Created.ToString("dd MMM yyyy")</td>
+                    <td class="align-middle">@item.PhoneNumber</td>
+
+                    <td class="align-middle">
+                        <a href="#" class="d-inline-block fs-18 text-muted hover-primary mr-5 js-update"
+                           data-id="@item.Id">
+                            <i class="fal fa-pencil-alt"></i>
+                        </a>
+                        <a href="#" class="d-inline-block fs-18 text-muted hover-primary js-delete">
+                            <i class="fal fa-trash-alt"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+
+    <nav class="pt-4">
+        <ul class="pagination rounded-active justify-content-center mb-0">
+            @if (Model.HasPreviousPage)
+            {
+                <li class="page-item">
+                    <a class="page-link @prevDisabled" href="#"
+                       data-pageNumber="@(Model.PageIndex - 1)">
+                        <i class="far fa-angle-double-left"></i>
+                    </a>
+
+                </li>
+            }
+
+            @for (int i = 0; i < Model.TotalPages; i++)
+            {
+                var active = "active";
+
+                if (i + 1 == Model.PageIndex)
+                {
+                    active = "active";
+                }
+                else
+                {
+                    active = "";
+                }
+                <li class="page-item @active">
+                    <a class="page-link" href="#" data-pageNumber="@(i+1)">
+                        @(i+1)
+                    </a>
+                </li>
+            }
+
+            @if (Model.HasNextPage)
+            {
+                <li class="page-item">
+                    <a class="page-link @nextDisabled" href="#"
+                       data-pageNumber="@(Model.PageIndex + 1)">
+                        <i class="far fa-angle-double-right"></i>
+                    </a>
+                </li>
+            }
+        </ul>
+    </nav>
+}
+else
+{
+    <div class="alert alert-primary" role="alert">
+        No data found!
+    </div>
+}

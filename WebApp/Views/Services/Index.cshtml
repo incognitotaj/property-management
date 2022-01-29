@@ -1,0 +1,166 @@
+﻿@model ServiceRequestCreateViewModel
+@{
+    ViewData["Title"] = "Services";
+}
+
+@section Styles{
+
+}
+
+<section class="pt-2 pb-10 pb-lg-17 page-title bg-overlay bg-img-cover-center"
+         style="background-image: url('images/BG3.jpg');">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb text-light mb-0">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Services</li>
+            </ol>
+        </nav>
+        <h1 class="fs-22 fs-md-42 mb-0 text-white font-weight-normal text-center pt-17 pb-13 lh-15 px-lg-16" data-animate="fadeInDown">
+            Property Point is an estate agency that helps people live in more thoughtful and beautiful ways.
+        </h1>
+    </div>
+</section>
+<section class="bg-patten-05 mb-13">
+    <div class="container">
+        <div class="card mt-n13 z-index-3 pt-10 border-0">
+            <div class="card-body p-0">
+                <h2 class="text-dark lh-1625 text-center mb-2">Services Offered</h2>
+                <p class="mxw-751 text-center mb-8 px-8">
+                    Property Point & Builders is an estate agency that helps people live in 
+                    more thoughtful and beautiful ways. Our home is at the heart of the design, 
+                    allowing us to engage with our community through talks and events, and uphold our company culture with film.
+                </p>
+            </div>
+        </div>
+        <div class="row mb-9">
+            @await Component.InvokeAsync("WebApp.ViewComponents.ServicesList")
+        </div>
+        <hr class="mb-11">
+        <h2 class="text-heading mb-2 fs-22 fs-md-32 text-center lh-16 mxw-571 px-lg-8">
+            Do You Have An Upcoming
+            Real Esate Transaction?
+        </h2>
+        @*<p class="text-center mxw-670 mb-8">
+            Lorem ipsum dolor sit amet, consec tetur cing elit. Suspe ndisse suscorem ipsum dolor sit ametcipsum
+            ipsumg consec tetur cing elitelit.
+        </p>*@
+        <form class="mxw-774" id="FrmService" method="post"
+              asp-area="" asp-controller="Services" asp-action="Index">
+
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(excludePropertyErrors: true, null, new { @class = "text-danger small" })
+            <div class="row">
+                <div class="col-md-12 form-group">
+                    <div class="dropdown bootstrap-select form-control border-0 shadow-none form-control-lg">
+                        <select class="form-control border-0 shadow-none form-control-lg selectpicker"
+                                title="Service" data-style="btn-lg py-2 h-52"
+                                asp-for="ServiceId" asp-items="Model.Services">
+                            <option class="bs-title-option" value=""></option>
+                        </select>
+                    </div>
+                    <span asp-validation-for="ServiceId" class="text-danger small"></span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <input type="text" placeholder="First Name"
+                               class="form-control form-control-lg border-0" asp-for="FirstName">
+                        <span asp-validation-for="FirstName" class="text-danger small"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <input type="text" placeholder="Last Name" asp-for="LastName"
+                               class="form-control form-control-lg border-0">
+                        <span asp-validation-for="LastName" class="text-danger small"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <input placeholder="Your Email"
+                               class="form-control form-control-lg border-0"
+                               type="email" asp-for="Email">
+                        <span asp-validation-for="Email" class="text-danger small"></span>
+                    </div>
+                </div>
+                <div class="col-md-6 px-2">
+                    <div class="form-group">
+                        <input type="text" placeholder="Your Phone" asp-for="Mobile"
+                               class="form-control form-control-lg border-0">
+                        <span asp-validation-for="Mobile" class="text-danger small"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group mb-6">
+                <textarea class="form-control border-0" placeholder="Message" asp-for="Message" rows="5"></textarea>
+                <span asp-validation-for="Message" class="text-danger small"></span>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-lg btn-primary px-9">Submit</button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<div id="modal-placeholder"></div>
+
+@section Scripts{
+    <script src="~/lib/bootbox.js/bootbox.js"></script>
+    <script src="~/lib/jquery-validate/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script>
+        $.validator.unobtrusive.parse('#FrmService');
+    </script>
+    <script>
+        $(function () {
+            let placeholderElement = $('#modal-placeholder');
+
+            $("#FrmService").on("submit", function (e) {
+                e.preventDefault();
+                let frm = $(this);
+
+                if ($('#FrmService').valid()) {
+                    bootbox.confirm("Are you sure to proceed?", function (result) {
+                        if (result) {
+                            let frm = $("#FrmService");
+                            let url = frm.attr("action");
+                            let type = frm.attr("method");
+
+                            $.ajax({
+                                url: url,
+                                type: type,
+                                data: frm.serialize(),
+                                success: function (response) {
+                                    if (response.status == true) {
+                                        var path = "/Services/Message";
+                                        $.get(path).done(function (response) {
+                                            placeholderElement.html(response);
+                                            placeholderElement.find('.modal').modal('show');
+                                        });
+                                    } else {
+                                        toastr.error(response.message);
+                                    }
+                                },
+                                error: function () {
+
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+
+            placeholderElement.on('click', '[data-save="modal-message"]', function (event) {
+                event.preventDefault();
+                //var form = $(this).parents('.modal').find('form');
+
+                placeholderElement.find('.modal').modal('hide');
+                window.location = "/Services";
+            });
+        });
+    </script>
+}

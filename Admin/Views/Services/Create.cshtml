@@ -1,0 +1,109 @@
+﻿@model ServiceCreateViewModel
+@{
+    Layout = null;
+}
+
+<div class="modal fade" data-backdrop="static" id="service-create" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    Service <small class="text-muted">Registration</small>
+                </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form asp-area="" asp-controller="Services" asp-action="Create"
+                  method="post" id="FrmCreate"
+                  enctype="multipart/form-data">
+                <div class="modal-body p-4 py-sm-7 px-sm-8">
+
+
+                    @Html.AntiForgeryToken()
+                    <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
+
+                    <div class="form-group mb-4">
+                        <label asp-for="Name" class="sr-only- font-weight-bold">Name</label>
+                        <div class="input-group input-group-lg">
+                            <input type="text" class="form-control border-0 shadow-none fs-13"
+                                   asp-for="Name"
+                                   placeholder="name">
+                        </div>
+                        <span asp-validation-for="Name" class="text-danger small"></span>
+
+                    </div>
+                    <div class="form-group mb-4">
+                        <label asp-for="Description" class="sr-only- font-weight-bold">Description</label>
+                        <div class="input-group input-group-lg">
+                            <textarea class="form-control border-0 shadow-none fs-13"
+                                      asp-for="Description"
+                                      placeholder="Description" rows="3"></textarea>
+                        </div>
+                        <span asp-validation-for="Description" class="text-danger small"></span>
+
+                    </div>
+
+
+                    <div class="form-group mb-4">
+                        <label class="sr-only- font-weight-bold">Photo</label>
+                        <div class="input-group input-group-lg">
+                            <input type="file" class="custom-file-input border-0 shadow-none fs-13"
+                                   id="Photo" name="Photo">
+                            <label class="custom-file-label" for="Photo">Choose file</label>
+                        </div>
+                    </div>
+                    <div class="form-group mb-4">
+                        <img id="preview" src="~/images/slider-img5.jpg" alt="your image"
+                             class="img img-thumbnail img-responsive center-block d-block mx-auto" />
+                    </div>
+                    <div class="d-flex mb-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" asp-for="IsActive">
+                            <label class="form-check-label" asp-for="IsActive">
+                                Mark as active service, open to public.
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-lg" data-save="modal">Save Changes</button>
+                    <button type="button" class="btn btn-accent btn-lg"
+                            data-dismiss="modal">
+                        Cancel
+                    </button>
+                </div>
+                <script>
+                    $(function () {
+
+                        function readURL(input) {
+                            if (input.files && input.files[0]) {
+                                var reader = new FileReader();
+
+                                reader.onload = function (e) {
+                                    $('#preview').attr('src', e.target.result);
+                                }
+
+                                reader.readAsDataURL(input.files[0]);
+                                $(".custom-file-label").text(input.files[0].name);
+                            }
+                        }
+
+                        $("#Photo").change(function () {
+                            readURL(this);
+                        });
+                    });
+                </script>
+
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $.validator.unobtrusive.parse('#FrmCreate');
+</script>

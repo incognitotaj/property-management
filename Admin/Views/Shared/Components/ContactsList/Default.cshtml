@@ -1,0 +1,132 @@
+﻿@model PaginatedList<Contact>
+@{
+    Layout = null;
+}
+
+@if (Model.Any())
+{
+    <table class="table table-hover bg-white border rounded-lg">
+        <thead class="thead-sm thead-black">
+            <tr>
+                <th scope="col" class="border-top-0 pt-6 pb-3">Name</th>
+                <th scope="col" class="border-top-0 pt-6 pb-3">Contact</th>
+                <th scope="col" class="border-top-0 pt-6 pb-3">Date Created</th>
+                <th scope="col" class="border-top-0 pt-6 pb-3">Status</th>
+                <th scope="col" class="border-top-0 pt-6 pb-3">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr class="shadow-hover-xs-2 bg-hover-white">
+                    <td class="align-middle">
+                        <div class="text-muted small">
+                            @item.FirstName
+                        </div>
+                        <div class="text-muted small">
+                            @item.LastName
+                        </div>
+                    </td>
+                    <td class="align-middle">
+                        <div class="text-muted small">
+                            @item.Email
+                        </div>
+                        <div class="text-muted small">
+                            @item.Mobile
+                        </div>
+                    </td>
+                    <td class="align-middle">@item.Created.ToString("dd MMM yyyy")</td>
+                    <td class="align-middle">
+
+                        @{
+                            var status = item.IsActive == true ? "Active" : "In-Active";
+                            var statusBadge = item.IsActive == true ? "success" : "warning";
+                        }
+
+                        <span class="badge badge-@statusBadge">@status</span>
+                    </td>
+
+                    <td class="align-middle">
+                        <a asp-area="" asp-controller="Contacts" asp-action="Details" data-id="@item.ContactId"
+                           class="btn btn-sm bg-hover-light border fs-14 px-3 js-message">
+                            View
+                            <span class="d-inline-block ml-1 text-primary ">
+                                <i class="fal fa-eye"></i>
+                            </span>
+                        </a>
+                    </td>
+
+                    <td class="align-middle">
+                        @if (item.IsActive)
+                        {
+                            <a href="#" class="d-inline-block fs-18 text-muted hover-primary js-delete"
+                               data-id="@item.ContactId" title="In activate">
+                                <i class="fal fa-thumbs-down"></i>
+                            </a>
+                        }
+                        else
+                        {
+                            <a href="#" class="d-inline-block fs-18 text-muted hover-primary js-delete"
+                               data-id="@item.ContactId" title="Activate">
+                                <i class="fal fa-thumbs-up"></i>
+                            </a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+
+    <nav class="pt-4">
+        <ul class="pagination rounded-active justify-content-center mb-0">
+            @if (Model.HasPreviousPage)
+            {
+                <li class="page-item">
+                    <a class="page-link @prevDisabled" href="#"
+                       data-pageNumber="@(Model.PageIndex - 1)">
+                        <i class="far fa-angle-double-left"></i>
+                    </a>
+
+                </li>
+            }
+
+            @for (int i = 0; i < Model.TotalPages; i++)
+            {
+                var active = "active";
+
+                if (i + 1 == Model.PageIndex)
+                {
+                    active = "active";
+                }
+                else
+                {
+                    active = "";
+                }
+                <li class="page-item @active">
+                    <a class="page-link" href="#" data-pageNumber="@(i+1)">
+                        @(i+1)
+                    </a>
+                </li>
+            }
+
+            @if (Model.HasNextPage)
+            {
+                <li class="page-item">
+                    <a class="page-link @nextDisabled" href="#"
+                       data-pageNumber="@(Model.PageIndex + 1)">
+                        <i class="far fa-angle-double-right"></i>
+                    </a>
+                </li>
+            }
+        </ul>
+    </nav>
+}
+else
+{
+    <div class="alert alert-primary" role="alert">
+        No data found!
+    </div>
+}

@@ -1,0 +1,139 @@
+﻿@model UserCreateViewModel
+@{
+    Layout = null;
+}
+
+<div class="modal fade" data-backdrop="static" id="user-create" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    Fresh <small class="text-muted">Registration</small>
+                </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form asp-area="" asp-controller="Users" asp-action="Create"
+                  method="post" id="FrmCreate">
+                <div class="modal-body p-4 py-sm-7 px-sm-8">
+
+
+                    @Html.AntiForgeryToken()
+                    <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
+
+                    <div class="form-group mb-4">
+                        <label asp-for="FirstName" class="sr-only">First Name</label>
+                        <div class="input-group input-group-lg">
+                            <div class="input-group-prepend ">
+                                <span class="input-group-text bg-gray-01 border-0 text-muted fs-18"
+                                      id="inputGroup-sizing-lg">
+                                    <i class="far fa-user"></i>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control border-0 shadow-none fs-13"
+                                   asp-for="FirstName"
+                                   placeholder="First name">
+                        </div>
+                    </div>
+                    <div class="form-group mb-4">
+                        <label asp-for="LastName" class="sr-only">Last Name</label>
+                        <div class="input-group input-group-lg">
+                            <div class="input-group-prepend ">
+                                <span class="input-group-text bg-gray-01 border-0 text-muted fs-18"
+                                      id="inputGroup-sizing-lg">
+                                    <i class="far fa-user"></i>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control border-0 shadow-none fs-13"
+                                   asp-for="LastName"
+                                   placeholder="Last name">
+                        </div>
+                    </div>
+                    <div class="form-group mb-4">
+                        <label asp-for="Email" class="sr-only">Username</label>
+                        <div class="input-group input-group-lg">
+                            <div class="input-group-prepend ">
+                                <span class="input-group-text bg-gray-01 border-0 text-muted fs-18" id="inputGroup-sizing-lg">
+                                    <i class="far fa-user"></i>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control border-0 shadow-none fs-13"
+                                   asp-for="Email"
+                                   placeholder="Username i.e., your email">
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label asp-for="Password" class="sr-only">Password</label>
+                        <div class="input-group input-group-lg">
+                            <div class="input-group-prepend ">
+                                <span class="input-group-text bg-gray-01 border-0 text-muted fs-18">
+                                    <i class="far fa-lock"></i>
+                                </span>
+                            </div>
+                            <input type="password" class="form-control border-0 shadow-none fs-13"
+                                   asp-for="Password" placeholder="Password">
+                            <div class="input-group-append">
+                                <span class="input-group-text bg-gray-01 border-0 text-body fs-18">
+                                    <i class="far fa-eye-slash"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group mb-4">
+                        <label asp-for="ConfirmPassword" class="sr-only">Confirm Password</label>
+                        <div class="input-group input-group-lg">
+                            <div class="input-group-prepend ">
+                                <span class="input-group-text bg-gray-01 border-0 text-muted fs-18">
+                                    <i class="far fa-lock"></i>
+                                </span>
+                            </div>
+                            <input type="password" class="form-control border-0 shadow-none fs-13"
+                                   asp-for="ConfirmPassword"
+                                   placeholder="Confirm Password">
+                            <div class="input-group-append">
+                                <span class="input-group-text bg-gray-01 border-0 text-body fs-18">
+                                    <i class="far fa-eye-slash"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label asp-for="Mobile" class="sr-only">Mobile</label>
+                        <div class="input-group input-group-lg">
+                            <div class="input-group-prepend ">
+                                <span class="input-group-text bg-gray-01 border-0 text-muted fs-18">
+                                    <i class="far fa-mobile"></i>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control border-0 shadow-none fs-13"
+                                   asp-for="Mobile"
+                                   placeholder="Mobile">
+                            <div class="input-group-append">
+                                <span class="input-group-text bg-gray-01 border-0 text-body fs-18">
+                                    <i class="far fa-eye-slash"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary btn-lg" data-save="modal">Save Changes</button>
+                    <button type="button" class="btn btn-accent btn-lg"
+                            data-dismiss="modal">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $.validator.unobtrusive.parse('#FrmCreate');
+</script>

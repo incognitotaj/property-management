@@ -1,0 +1,70 @@
+﻿@model IEnumerable<ServiceRequest>
+@{
+    Layout = null;
+}
+
+@if (Model.Any())
+{
+    <table class="table table-hover bg-white border rounded-lg">
+        <thead class="thead-sm thead-black">
+            <tr>
+                <th scope="col" class="border-top-0 pt-6 pb-3">First Name</th>
+                <th scope="col" class="border-top-0 pt-6 pb-3">Last Name</th>
+                <th scope="col" class="border-top-0 pt-6 pb-3">Date Created</th>
+                <th scope="col" class="border-top-0 pt-6 pb-3">Contact</th>
+                <th scope="col" class="border-top-0 pt-6 pb-3"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr class="shadow-hover-xs-2 bg-hover-white">
+                    <td class="align-middle">@item.FirstName</td>
+                    <td class="align-middle">@item.LastName</td>
+                    <td class="align-middle">@item.Created.ToString("dd MMM yyyy")</td>
+                    <td class="align-middle font-weight-bold">
+                        <div class="text-muted small mb-1">
+                            @item.Email
+                        </div>
+                        <div class="text-muted small">
+                            @item.Mobile
+                        </div>
+                    </td>
+                    <td class="align-middle">
+
+                        @{
+                            var status = item.IsRead == true ? "Read" : "Unread";
+                            var statusBadge = item.IsRead == true ? "success" : "warning";
+                        }
+
+                        <span class="badge badge-@statusBadge">@status</span>
+                    </td>
+                    <td class="align-middle">
+                        @if (item.IsRead)
+                        {
+                            <a href="#" class="d-inline-block fs-18 text-muted hover-primary js-delete"
+                               data-id="@item.ServiceId" title="Mark as Unread">
+                                <i class="fal fa-undo"></i>
+                            </a>
+                        }
+                        else
+                        {
+                            <a href="#" class="d-inline-block fs-18 text-muted hover-primary js-delete"
+                               data-id="@item.ServiceId" title="Mark as read">
+                                <i class="fal fa-eye"></i>
+                            </a>
+                        }
+
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-primary" role="alert">
+        No data found!
+    </div>
+}

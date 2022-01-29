@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewData["Title"] = "Blogs";
+}
+
+<section class="pb-6 page-title shadow">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb pt-6 pt-lg-2 pb-5 lh-15">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Blogs</li>
+            </ol>
+        </nav>
+        <h1 class="fs-30 lh-16 mb-1 text-dark font-weight-600">Blogs</h1>
+    </div>
+</section>
+
+<section class="py-13 bg-gray-01">
+    <div class="container">
+        <h2 class="fs-30 lh-16 mb-10 text-dark font-weight-600 text-center">Interesting articles updated daily</h2>
+        @await Component.InvokeAsync("WebApp.ViewComponents.BlogsList")
+        <nav class="pt-4">
+            <ul class="pagination rounded-active justify-content-center mb-0">
+                <li class="page-item">
+                    <a class="page-link" href="#"><i class="far fa-angle-double-left"></i></a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item active"><a class="page-link" href="#">2</a></li>
+                <li class="page-item d-none d-sm-block"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">...</li>
+                <li class="page-item"><a class="page-link" href="#">6</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#">
+                        <i class="far fa-angle-double-right"></i>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</section>

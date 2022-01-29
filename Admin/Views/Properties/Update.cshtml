@@ -1,0 +1,280 @@
+﻿@model PropertyUpdateViewModel
+@{
+    ViewData["Title"] = "Edit Property";
+    Layout = "_Layout";
+}
+
+<section class="pb-6 page-title shadow">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb pt-6 pt-lg-2 pb-5 lh-15">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item"><a href="/Properties">Properties</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Edit</li>
+            </ol>
+        </nav>
+        <div class="d-flex justify-content-between">
+            <h1 class="fs-30 lh-16 mb-1 text-dark font-weight-600">Property Details</h1>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="bg-gray-02 py-lg-8 pt-11 pb-6">
+        <div class="container container-xxl">
+            <form asp-area="" asp-controller="Properties" asp-action="Update"
+                  method="post" enctype="multipart/form-data">
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(excludePropertyErrors: true, null, new { @class = "text-danger small" })
+                
+                <input type="hidden" asp-for="PropertyId" />
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card mb-6">
+                            <div class="card-body p-6">
+                                <h3 class="card-title mb-0 text-heading fs-22 lh-15">
+                                    Contact Information
+                                </h3>
+                                <div class="row">
+                                    <div class="form-group col-lg-4">
+                                        <label asp-for="Name" class="text-heading">Name</label>
+                                        <input type="text" class="form-control form-control-lg border-0"
+                                               asp-for="Name">
+                                    </div>
+                                    <div class="form-group col-lg-4">
+                                        <label asp-for="Email" class="text-heading">Email</label>
+                                        <input type="text" class="form-control form-control-lg border-0"
+                                               asp-for="Email">
+                                    </div>
+                                    <div class="form-group col-lg-4">
+                                        <label asp-for="Mobile" class="text-heading">Mobile</label>
+                                        <input type="text" class="form-control form-control-lg border-0"
+                                               asp-for="Mobile">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="card mb-6">
+                            <div class="card-body p-6">
+                                <h3 class="card-title mb-0 text-heading fs-22 lh-15">
+                                    Type, Purpose, Location, &amp; Address
+                                </h3>
+                                <div class="form-group">
+                                    <label asp-for="PropertyTypeId" class="text-heading">Type </label>
+                                    <select class="form-control form-control-lg border-0 font-weight-normal"
+                                            asp-for="PropertyTypeId" asp-items="Model.PropertyTypes">
+                                        <option>Select From List</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="PurposeId" class="text-heading">Purpose </label>
+                                    <select class="form-control form-control-lg border-0 font-weight-normal"
+                                            asp-for="PurposeId" asp-items="Model.Purposes">
+                                        <option>Select From List</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="CityId" class="text-heading">City </label>
+                                    <select class="form-control form-control-lg border-0 font-weight-normal"
+                                            asp-for="CityId" asp-items="Model.Cities">
+                                        <option>Select From List</option>
+                                    </select>
+                                </div>
+                                <div class="form-group mb-0">
+                                    <label asp-for="Address" class="text-heading">Address</label>
+                                    <textarea class="form-control border-0" rows="3"
+                                              asp-for="Address"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card mb-6">
+                            <div class="card-body p-6">
+                                <h3 class="card-title mb-0 text-heading fs-22 lh-15">
+                                    Image
+                                </h3>
+
+                                @{
+                                    var imgSrc = "";
+                                    if (Model.CurrentPhoto != null)
+                                    {
+                                        var base64 = Convert.ToBase64String(Model.CurrentPhoto);
+                                        imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                                    }
+                                }
+
+                                <div class="form-group mb-4">
+                                    <label class="sr-only-">Photo</label>
+                                    <div class="input-group input-group-lg">
+                                        <input type="file" class="custom-file-input border-0 shadow-none fs-13"
+                                               id="Photo" name="Photo">
+                                        <label class="custom-file-label" for="Photo">Choose file</label>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-4">
+                                    <label class="sr-only-">Preview</label>
+
+                                    <img id="preview" src="@imgSrc" alt="your image"
+                                         class="img img-thumbnail img-responsive center-block d-block mx-auto" />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="card mb-6">
+                            <div class="card-body p-6">
+                                <h3 class="card-title mb-0 text-heading fs-22 lh-15">
+                                    Description
+                                </h3>
+                                <div class="form-group">
+                                    <label asp-for="Title" class="text-heading">Title <span class="text-muted">(mandatory)</span></label>
+                                    <input type="text" class="form-control form-control-lg border-0" asp-for="Title">
+                                </div>
+                                <div class="form-group mb-0">
+                                    <label asp-for="Description" class="text-heading">Description</label>
+                                    <textarea class="form-control border-0" rows="5" asp-for="Description"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="card mb-6">
+                            <div class="card-body p-6">
+                                <h3 class="card-title mb-0 text-heading fs-22 lh-15">
+                                    Area &amp; Price
+                                </h3>
+                                <div class="form-group">
+                                    <label asp-for="Price" class="text-heading">Price</label>
+                                    <input type="text" class="form-control form-control-lg border-0" asp-for="Price">
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="LandArea" class="text-heading">Area </label>
+                                    <input type="text" class="form-control form-control-lg border-0" asp-for="LandArea">
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="AreaUnitId" class="text-heading">Unit </label>
+                                    <select class="form-control form-control-lg border-0 font-weight-normal"
+                                            asp-for="AreaUnitId" asp-items="Model.AreaUnits">
+                                        <option>Select From List</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="card mb-6">
+                            <div class="card-body p-6">
+                                <h3 class="card-title mb-0 text-heading fs-22 lh-15">
+                                    Beds, Baths, Kitchens, &amp; Floors
+                                </h3>
+                                <div class="form-group">
+                                    <label asp-for="BedRooms" class="text-heading">Bed Rooms</label>
+                                    <input type="number" class="form-control form-control-lg border-0" asp-for="BedRooms">
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="BathRooms" class="text-heading">Bath Rooms </label>
+                                    <input type="number" class="form-control form-control-lg border-0" asp-for="BathRooms">
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Kitchens" class="text-heading">Kitchens </label>
+                                    <input type="number" class="form-control form-control-lg border-0" asp-for="Kitchens">
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Floors" class="text-heading">Floors </label>
+                                    <input type="number" class="form-control form-control-lg border-0" asp-for="Floors">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+
+                        <div class="card mb-6">
+                            <div class="card-body p-6">
+                                <h3 class="card-title mb-3 text-heading fs-22 lh-15">
+                                    Status
+                                </h3>
+                                <div class="d-flex mb-4">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" asp-for="IsActive">
+                                        <label class="form-check-label" asp-for="IsActive">
+                                            Mark as active property, open to public.
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="d-flex mb-4">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" asp-for="IsFeatured">
+                                        <label class="form-check-label" asp-for="IsFeatured">
+                                            Mark as a featured property.
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="d-flex mb-4">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" asp-for="IsSold">
+                                        <label class="form-check-label" asp-for="IsSold">
+                                            Mark as a sold out.
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-lg-12 form-group">
+                        <a href="/Properties" class="btn btn-accent btn-lg float-right ml-2"
+                           data-dismiss="modal">
+                            Cancel
+                        </a>
+
+                        <button type="submit" class="btn btn-primary btn-lg float-right">Save Changes</button>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+
+@section Scripts{
+    <script>
+        $(function () {
+
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('#preview').attr('src', e.target.result);
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                    $(".custom-file-label").text(input.files[0].name);
+                }
+            }
+
+            $("#Photo").change(function () {
+                readURL(this);
+            });
+        });
+    </script>
+}

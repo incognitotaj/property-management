@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Service>
+@{
+    Layout = null;
+}
+
+
+@if (Model.Any())
+{
+    <div class="row mt-8">
+        @foreach (var item in Model)
+        {
+            var imgSrc = "";
+            if (item.Photo != null)
+            {
+                var base64 = Convert.ToBase64String(item.Photo);
+                imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+            }
+
+            <div class="col-md-4 mb-6 mb-lg-0">
+                <div class="card shadow-2 px-7 pb-6 pt-4 h-100 border-0">
+                    <div class="card-img-top d-flex align-items-end justify-content-center">
+                        <span class="text-primary fs-90 lh-1">
+                            <svg class="icon icon-e1">
+                                <use xlink:href="#icon-e1"></use>
+                            </svg>
+                            <img src="@imgSrc"
+                                 alt="@item.Name" />
+                        </span>
+                    </div>
+                    <div class="card-body px-0 pt-6 pb-0 text-center">
+                        <h4 class="card-title fs-18 lh-17 text-dark mb-2">
+                            @item.Name
+                        </h4>
+                        <p class="card-text px-2">
+                            @item.Description
+                        </p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="alert alert-primary" role="alert">
+        No data found!
+    </div>
+}

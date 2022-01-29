@@ -1,0 +1,39 @@
+﻿@model Contact
+@{
+    Layout = null;
+}
+
+
+<div class="modal fade" id="message" tabindex="-1" role="dialog">
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">
+                    Contact <small class="small text-muted"> Message</small>
+                </h3>
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-light">
+                    <p>
+                        @Model.Message
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-accent btn-lg"
+                        data-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+    });
+</script>

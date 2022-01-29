@@ -1,0 +1,259 @@
+﻿@model PropertySearchViewModel
+@{
+    ViewData["Title"] = "Properties";
+}
+
+@section Styles{
+
+    <link href="~/lib/toastr.js/toastr.css" rel="stylesheet" />
+}
+<section class="pb-8 page-title shadow" data-animated-id="1">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb pt-6 pt-lg-2 lh-15 pb-5">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Listing</li>
+            </ol>
+            <h1 class="fs-30 lh-1 mb-0 text-heading font-weight-600">Listing of all properties</h1>
+        </nav>
+    </div>
+</section>
+
+<section class="pt-8 pb-11 bg-gray-01" data-animated-id="2">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 order-2 order-lg-1 primary-sidebar sidebar-sticky" id="sidebar">
+                <div class="primary-sidebar-inner" style="position: static; left: auto; width: 370px;">
+                    <div class="card mb-4">
+                        <div class="card-body px-6 py-4">
+                            <h4 class="card-title fs-16 lh-2 text-dark mb-3">Find your home</h4>
+                            <form>
+                                <div class="form-group">
+                                    <label for="key-word" class="sr-only">Key Word</label>
+                                    <input type="text" class="form-control form-control-lg border-0 shadow-none"
+                                           asp-for="Title"
+                                           placeholder="Enter keyword...">
+                                </div>
+                                <div class="form-group">
+                                    <label for="location" class="sr-only">Location</label>
+                                    <div class="dropdown bootstrap-select form-control border-0 shadow-none form-control-lg">
+                                        <select class="form-control border-0 shadow-none form-control-lg selectpicker"
+                                                name="location" title="Location" data-style="btn-lg py-2 h-52"
+                                                asp-for="CityId" asp-items="Model.Cities">
+                                            <option class="bs-title-option" value="0"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="type" class="sr-only">Type</label>
+                                    <div class="dropdown bootstrap-select form-control border-0 shadow-none form-control-lg">
+                                        <select class="form-control border-0 shadow-none form-control-lg selectpicker" name="type"
+                                                title="All Types" data-style="btn-lg py-2 h-52"
+                                                asp-for="PropertyTypeId" asp-items="Model.PropertyTypes">
+                                            <option class="bs-title-option" value="0"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="status" class="sr-only">Purpose</label>
+                                    <div class="dropdown bootstrap-select form-control border-0 shadow-none form-control-lg">
+                                        <select class="form-control border-0 shadow-none form-control-lg selectpicker"
+                                                title="All Purpose" data-style="btn-lg py-2 h-52"
+                                                asp-for="PurposeId" asp-items="Model.Purposes">
+                                            <option class="bs-title-option" value="0"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-row mb-4">
+                                    <div class="col">
+                                        <label for="bed" class="sr-only">Beds</label>
+                                        <div class="dropdown bootstrap-select form-control border-0 shadow-none form-control-lg">
+                                            <select class="form-control border-0 shadow-none form-control-lg selectpicker" title="Beds"
+                                                    data-style="btn-lg py-2 h-52" asp-for="BedId">
+                                                <option class="bs-title-option" value="0">Beds</option>
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5</option>
+                                                <option>6</option>
+                                                <option>7</option>
+                                                <option>8</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <label for="baths" class="sr-only">Baths</label>
+                                        <div class="dropdown bootstrap-select form-control border-0 shadow-none form-control-lg">
+                                            <select class="form-control border-0 shadow-none form-control-lg selectpicker"
+                                                    title="Baths" data-style="btn-lg py-2 h-52" asp-for="BathId">
+                                                <option class="bs-title-option" value="0">Baths</option>
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5</option>
+                                                <option>6</option>
+                                                <option>7</option>
+                                                <option>8</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-0">
+                                    <label for="price" class="mb-0 text-gray-light">Price Range</label>
+                                </div>
+                                <div class="form-row mb-4">
+                                    <div class="col">
+                                        <input type="number" class="form-control form-control-lg border-0 shadow-none"
+                                               asp-for="PriceFrom"
+                                               placeholder="From">
+                                    </div>
+                                    <div class="col">
+                                        <input type="number" class="form-control form-control-lg border-0 shadow-none"
+                                               asp-for="PriceTo"
+                                               placeholder="To">
+                                    </div>
+                                </div>
+                                <div class="form-group mb-0">
+                                    <label asp-for="AreaFrom" class="mb-0 text-gray-light">Area Range</label>
+                                </div>
+                                <div class="form-row mb-4">
+                                    <div class="col">
+                                        <input type="number" class="form-control form-control-lg border-0 shadow-none" asp-for="AreaFrom"
+                                               placeholder="From">
+                                    </div>
+                                    <div class="col">
+                                        <input type="number" class="form-control form-control-lg border-0 shadow-none" asp-for="AreaTo"
+                                               placeholder="To">
+                                    </div>
+                                </div>
+
+                                <button type="button" id="BtnSearch"
+                                        class="btn btn-primary btn-lg btn-block shadow-none mt-4">
+                                    Search
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8 mb-8 mb-lg-0 order-1 order-lg-2">
+                <div class="row align-items-sm-center mb-4">
+                    <div class="col-md-6">
+                        <h2 class="fs-15 text-dark mb-0">
+                            We found properties available for you
+                        </h2>
+                    </div>
+                    <div class="col-md-6 mt-4 mt-md-0">
+                        @*<div class="d-flex justify-content-md-end align-items-center">
+                                <div class="input-group border rounded input-group-lg w-auto bg-white mr-3">
+                                    <label class="input-group-text bg-transparent border-0 text-uppercase letter-spacing-093 pr-1 pl-3" for="inputGroupSelect01"><i class="fas fa-align-left fs-16 pr-2"></i>Sortby:</label>
+                                    <div class="dropdown bootstrap-select form-control border-0 bg-transparent shadow-none p-0 sortby">
+                                        <select class="form-control border-0 bg-transparent shadow-none p-0 selectpicker sortby" data-style="bg-transparent border-0 font-weight-600 btn-lg pl-0 pr-3" id="inputGroupSelect01" name="sortby">
+                                            <option selected="">Top Selling</option>
+                                            <option value="1">Most Viewed</option>
+                                            <option value="2">Price(low to high)</option>
+                                            <option value="3">Price(high to low)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="d-none d-md-block">
+                                    <a class="fs-sm-18 text-dark" href="#">
+                                        <i class="fas fa-list"></i>
+                                    </a>
+                                    <a class="fs-sm-18 text-dark opacity-2 ml-5"
+                                       href="#">
+                                        <i class="fa fa-th-large"></i>
+                                    </a>
+                                </div>
+                            </div>*@
+                    </div>
+                </div>
+                <div id="Properties">
+                    <div class="alert alert-primary" role="alert">
+                        Select Filters and view the list of available properties.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div id="modal-placeholder"></div>
+
+@section Scripts{
+    <script src="~/lib/jquery-validate/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script src="~/lib/bootbox.js/bootbox.js"></script>
+    <script src="~/lib/toastr.js/toastr.min.js"></script>
+    <script>
+        $(function () {
+            $("#BtnSearch").on("click", function (event) {
+                event.preventDefault();
+
+                $.ajax({
+                    url: 'Properties/Listing',
+                    type: 'GET',
+                    data: {
+                        title: $("#Title").val(),
+                        cityId: $("#CityId option:selected").val(),
+                        propertyTypeId: $("#PropertyTypeId option:selected").val(),
+                        purposeId: $("#PurposeId option:selected").val(),
+                        baths: $("#BedId option:selected").val(),
+                        beds: $("#BathId option:selected").val(),
+                        priceFrom: $("#PriceFrom").val(),
+                        priceTo: $("#PriceTo").val(),
+                        areaFrom: $("#AreaFrom").val(),
+                        areaTo: $("#AreaTo").val(),
+                    },
+                    success: function (response) {
+                        $("#Properties").html(response);
+                    },
+                    error: function () {
+                    }
+                })
+            });
+
+            let placeholderElement = $('#modal-placeholder');
+
+            $(document).delegate("#Properties .btn-offer", "click", function (e) {
+                e.preventDefault();
+
+                let element = $(this);
+
+                $.ajax({
+                    url: "/PropertyRequests/Create",
+                    type: "GET",
+                    data: { propertyId: element.attr("data-id") },
+                    success: function (response) {
+                        placeholderElement.html(response);
+                        placeholderElement.find('.modal').modal('show');
+                    },
+                    error: function () {
+                    }
+                });
+            });
+
+            placeholderElement.on('click', '[data-save="modal"]', function (event) {
+                event.preventDefault();
+
+                var form = $(this).parents('.modal').find('form');
+                var actionUrl = form.attr('action');
+                var dataToSend = form.serialize();
+
+                $.post(actionUrl, dataToSend).done(function (data) {
+                    var newBody = $('.modal-body', data);
+                    placeholderElement.find('.modal-body').replaceWith(newBody);
+
+                    // find IsValid input field and check it's value
+                    // if it's valid then hide modal window
+                    var isValid = newBody.find('[name="IsValid"]').val() == 'True';
+                    if (isValid) {
+                        placeholderElement.find('.modal').modal('hide');
+                        toastr.success("Your offer has been received successfully!");
+                    }
+                });
+            });
+        });
+    </script>
+}
